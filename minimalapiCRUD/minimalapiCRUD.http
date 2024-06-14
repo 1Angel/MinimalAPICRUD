@@ -1,0 +1,10 @@
+@minimalapiCRUD_HostAddress = https://localhost:7051
+
+GET {{minimalapiCRUD_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+GET {{minimalapiCRUD_HostAddress}}/posts
+
+###
