@@ -11,8 +11,8 @@ using minimalapiCRUD;
 namespace minimalapiCRUD.Migrations
 {
     [DbContext(typeof(Appdbcontext))]
-    [Migration("20240610160755_identityadded")]
-    partial class identityadded
+    [Migration("20240614214746_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

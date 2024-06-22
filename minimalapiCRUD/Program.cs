@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using minimalapiCRUD;
@@ -74,7 +75,39 @@ app.MapGet("/posts", async (Appdbcontext db) =>
 app.MapGet("/posts/{id}", async (Appdbcontext db, int id) =>
 {
     return await db.Posts.FirstOrDefaultAsync(x => x.id == id);
+});
+
+
+app.MapDelete("/posts/{id}/delete", async (Appdbcontext db, int id) =>
+{
+    var postId = await db.Posts.FirstOrDefaultAsync(x => x.id == id);
+    if(postId != null)
+    {
+        db.Posts.Remove(postId);
+        await db.SaveChangesAsync();
+        return Results.NoContent();
+    }
+
+    return Results.NotFound();
+});
+
+app.MapPut("/posts/{id}", async(Appdbcontext db, int id, Post post) =>
+{
+    var postid = await db.Posts.FindAsync(id);
+    if (postid == null)
+    {
+        return Results.NotFound();
+    }
+
+    postid.name = post.name;
+    postid.description = post.description;
+    await db.SaveChangesAsync();
+    return Results.Ok();
+
 })
+
+
+
 .WithOpenApi();
 
 app.Run();
